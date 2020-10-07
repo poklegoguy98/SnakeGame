@@ -20,7 +20,7 @@ namespace SnakeGame
             int dx = 1, dy = 0;
             int consoleWidthLimit = 79;
             int consoleHeightLimit = 24;
-
+            
             // clear to color
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.Clear();
@@ -30,6 +30,16 @@ namespace SnakeGame
 
             // whether to keep trails
             bool trail = false;
+
+            //generate a food when the game start
+            int foodX = 0;
+            int foodY = 0;
+            Random randomNum = new Random();
+            char foodS = '$';
+            foodX = randomNum.Next(1, consoleWidthLimit);
+            foodY = randomNum.Next(2, consoleHeightLimit);
+            Console.SetCursorPosition(foodX, foodY);
+            Console.Write(foodS);
 
             do // until escape
             {
@@ -49,7 +59,7 @@ namespace SnakeGame
                     consoleKey = Console.ReadKey(true);
                     switch (consoleKey.Key)
                     {
-                      
+
                         case ConsoleKey.UpArrow: //UP
                             dx = 0;
                             dy = -1;
@@ -102,8 +112,19 @@ namespace SnakeGame
                 // pause to allow eyeballs to keep up
                 System.Threading.Thread.Sleep(delayInMillisecs);
 
+                //generate a food when the snake ate it
+                do
+                {
+                    if (x == foodX && y == foodY)
+                    {
+                        foodX = randomNum.Next(1, consoleWidthLimit);
+                        foodY = randomNum.Next(2, consoleHeightLimit);
+                        Console.SetCursorPosition(foodX, foodY);
+                        Console.Write(foodS);
+                    }
+                } while (x == foodX && y == foodY);
+
             } while (gameLive);
         }
     }
-    
 }
