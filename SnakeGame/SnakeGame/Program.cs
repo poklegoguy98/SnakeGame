@@ -42,6 +42,35 @@ namespace SnakeGame
             Console.SetCursorPosition(foodX, foodY);
             Console.Write(foodS);
 
+            //Generate random obstacle when the game starts
+            int obstacles1X, obstacles1Y, obstacles2X, obstacles2Y, obstacles3X, obstacles3Y, obstacles4X, obstacles4Y = 0;
+            string obs = "||";
+            obstacles1X = randomNum.Next(1, consoleWidthLimit);
+            obstacles1Y = randomNum.Next(2, consoleHeightLimit);
+
+            obstacles2X = randomNum.Next(1, consoleWidthLimit);
+            obstacles2Y = randomNum.Next(2, consoleHeightLimit);
+
+
+            obstacles3X = randomNum.Next(1, consoleWidthLimit);
+            obstacles3Y = randomNum.Next(2, consoleHeightLimit);
+
+            obstacles4X = randomNum.Next(1, consoleWidthLimit);
+            obstacles4Y = randomNum.Next(2, consoleHeightLimit);
+            //obstacles5 = randomNum.Next(5, consoleWidthLimit);
+
+            Console.SetCursorPosition(obstacles1X, obstacles1Y);
+            Console.Write(obs);
+
+            Console.SetCursorPosition(obstacles2X, obstacles2Y);
+            Console.Write(obs);
+
+            Console.SetCursorPosition(obstacles3X, obstacles3Y);
+            Console.Write(obs);
+
+            Console.SetCursorPosition(obstacles4X, obstacles4Y);
+            Console.Write(obs);
+
             //time span variables
             int timer = 0;
             bool five = true;
@@ -119,7 +148,12 @@ namespace SnakeGame
                 System.Threading.Thread.Sleep(delayInMillisecs);
 
                 //generate a food when the snake ate it
-                    if (x == foodX && y == foodY)
+                    if (obstacles1X != foodX && obstacles1Y != foodY || obstacles2X != foodX && obstacles2Y != foodY && obstacles3X != foodX && obstacles3Y != foodY || obstacles4X != foodX && obstacles4Y != foodY)
+                    {
+                    Console.SetCursorPosition(foodX, foodY);
+                    Console.Write(foodS);
+                    }
+                    else
                     {
                         foodX = randomNum.Next(1, consoleWidthLimit);
                         foodY = randomNum.Next(2, consoleHeightLimit);
@@ -142,7 +176,50 @@ namespace SnakeGame
                     Console.Write(foodS);
                     timer = 0;
                 }
-   
+
+                //Set a condition to the obstacle when the snake hits it
+                if (x == obstacles1X && y == obstacles1Y)
+                {
+                    gameLive = false;
+                }
+                else
+                {
+                    Console.SetCursorPosition(obstacles1X, obstacles1Y);
+                    Console.Write(obs);
+                }
+
+                if (x == obstacles2X && y == obstacles2Y)
+                {
+                    gameLive = false;
+                }
+                else
+                {
+                    Console.SetCursorPosition(obstacles2X, obstacles2Y);
+                    Console.Write(obs);
+                }
+
+
+                if (x == obstacles3X && y == obstacles3Y)
+                {
+                    gameLive = false;
+                }
+                else
+                {
+                    Console.SetCursorPosition(obstacles3X, obstacles3Y);
+                    Console.Write(obs);
+                }
+
+
+                if (x == obstacles4X && y == obstacles4Y)
+                {
+                    gameLive = false;
+                }
+                else
+                {
+                    Console.SetCursorPosition(obstacles4X, obstacles4Y);
+                    Console.Write(obs);
+                }
+
 
             } while (gameLive);
         }
