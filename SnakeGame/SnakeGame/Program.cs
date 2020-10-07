@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SnakeGame
 {
@@ -41,6 +42,10 @@ namespace SnakeGame
             Console.SetCursorPosition(foodX, foodY);
             Console.Write(foodS);
 
+            //time span variables
+            int timer = 0;
+            bool five = true;
+
             do // until escape
             {
                 // print directions at top, then restore position
@@ -51,6 +56,7 @@ namespace SnakeGame
                 Console.WriteLine("Arrows move up/down/right/left. Press 'esc' quit.");
                 Console.SetCursorPosition(x, y);
                 Console.ForegroundColor = cc;
+                timer++;
 
                 // see if a key has been pressed
                 if (Console.KeyAvailable)
@@ -113,8 +119,6 @@ namespace SnakeGame
                 System.Threading.Thread.Sleep(delayInMillisecs);
 
                 //generate a food when the snake ate it
-                do
-                {
                     if (x == foodX && y == foodY)
                     {
                         foodX = randomNum.Next(1, consoleWidthLimit);
@@ -122,7 +126,23 @@ namespace SnakeGame
                         Console.SetCursorPosition(foodX, foodY);
                         Console.Write(foodS);
                     }
-                } while (x == foodX && y == foodY);
+
+                
+                //set a timer to change the position of the food every 5 seconds
+                if(timer == 100)
+                {
+                    Console.SetCursorPosition(foodX, foodY);
+                    if(five == true)
+                    {
+                        Console.Write(" ");
+                    }
+                    foodX = randomNum.Next(1, consoleWidthLimit);
+                    foodY = randomNum.Next(2, consoleHeightLimit);
+                    Console.SetCursorPosition(foodX, foodY);
+                    Console.Write(foodS);
+                    timer = 0;
+                }
+   
 
             } while (gameLive);
         }
