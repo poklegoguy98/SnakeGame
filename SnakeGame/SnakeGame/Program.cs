@@ -74,6 +74,9 @@ namespace SnakeGame
             int timer = 0;
             bool five = true;
 
+            //score variable
+            int gameScore = 0;
+
             do // until escape
             {
                 // print directions at top, then restore position
@@ -82,6 +85,7 @@ namespace SnakeGame
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine("Arrows move up/down/right/left. Press 'esc' quit.");
+                Console.WriteLine("Your score: " + gameScore);
                 Console.SetCursorPosition(x, y);
                 Console.ForegroundColor = cc;
                 timer++;
@@ -178,6 +182,12 @@ namespace SnakeGame
                     Console.SetCursorPosition(foodX, foodY);
                     Console.Write(foodS);
                     timer = 0;
+                }
+
+                //Increase score when the player ate a food
+                if(x == foodX && y == foodY)
+                {
+                    gameScore++;
                 }
 
                 //Set a condition to the obstacle when the snake hits it
