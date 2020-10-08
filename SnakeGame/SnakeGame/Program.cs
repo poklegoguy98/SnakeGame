@@ -57,7 +57,6 @@ namespace SnakeGame
 
             obstacles4X = randomNum.Next(1, consoleWidthLimit);
             obstacles4Y = randomNum.Next(2, consoleHeightLimit);
-            //obstacles5 = randomNum.Next(5, consoleWidthLimit);
 
             Console.SetCursorPosition(obstacles1X, obstacles1Y);
             Console.Write(obs);
@@ -146,26 +145,30 @@ namespace SnakeGame
 
                 // pause to allow eyeballs to keep up
                 System.Threading.Thread.Sleep(delayInMillisecs);
-
-                //generate a food when the snake ate it
-                    if (obstacles1X != foodX && obstacles1Y != foodY || obstacles2X != foodX && obstacles2Y != foodY && obstacles3X != foodX && obstacles3Y != foodY || obstacles4X != foodX && obstacles4Y != foodY)
-                    {
-                    Console.SetCursorPosition(foodX, foodY);
-                    Console.Write(foodS);
-                    }
-                    else
-                    {
-                        foodX = randomNum.Next(1, consoleWidthLimit);
-                        foodY = randomNum.Next(2, consoleHeightLimit);
-                        Console.SetCursorPosition(foodX, foodY);
-                        Console.Write(foodS);
-                    }
-
                 
                 //set a timer to change the position of the food every 5 seconds
                 if(timer == 100)
                 {
-                    Console.SetCursorPosition(foodX, foodY);
+                    do
+                    {
+                        if (obstacles1X != foodX && obstacles1Y != foodY || 
+                            obstacles2X != foodX && obstacles2Y != foodY || 
+                            obstacles3X != foodX && obstacles3Y != foodY || 
+                            obstacles4X != foodX && obstacles4Y != foodY)
+                        {
+                            Console.SetCursorPosition(foodX, foodY);
+                        }
+                        else
+                        {
+                            foodX = randomNum.Next(1, consoleWidthLimit);
+                            foodY = randomNum.Next(2, consoleHeightLimit);
+                            Console.SetCursorPosition(foodX, foodY);
+                        }
+                    } while (obstacles1X == foodX && obstacles1Y == foodY || 
+                    obstacles2X == foodX && obstacles2Y == foodY || 
+                    obstacles3X == foodX && obstacles3Y == foodY || 
+                    obstacles4X == foodX && obstacles4Y == foodY);
+
                     if(five == true)
                     {
                         Console.Write(" ");
@@ -182,20 +185,11 @@ namespace SnakeGame
                 {
                     gameLive = false;
                 }
-                else
-                {
-                    Console.SetCursorPosition(obstacles1X, obstacles1Y);
-                    Console.Write(obs);
-                }
+               
 
                 if (x == obstacles2X && y == obstacles2Y)
                 {
                     gameLive = false;
-                }
-                else
-                {
-                    Console.SetCursorPosition(obstacles2X, obstacles2Y);
-                    Console.Write(obs);
                 }
 
 
@@ -203,21 +197,11 @@ namespace SnakeGame
                 {
                     gameLive = false;
                 }
-                else
-                {
-                    Console.SetCursorPosition(obstacles3X, obstacles3Y);
-                    Console.Write(obs);
-                }
 
 
                 if (x == obstacles4X && y == obstacles4Y)
                 {
                     gameLive = false;
-                }
-                else
-                {
-                    Console.SetCursorPosition(obstacles4X, obstacles4Y);
-                    Console.Write(obs);
                 }
 
 
