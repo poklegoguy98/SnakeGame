@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Runtime.Serialization.Json;
 
 namespace SnakeGame
 {
@@ -12,7 +15,7 @@ namespace SnakeGame
             Console.ReadKey();
 
             // display this char on the console during the game
-            char ch = '*';
+            string ch = "***";
             bool gameLive = true;
             ConsoleKeyInfo consoleKey; // holds whatever key is pressed
 
@@ -70,12 +73,15 @@ namespace SnakeGame
             Console.SetCursorPosition(obstacles4X, obstacles4Y);
             Console.Write(obs);
 
+
             //time span variables
             int timer = 0;
             bool five = true;
 
             //score variable
             int gameScore = 0;
+
+            string snakeL = "   ";
 
             do // until escape
             {
@@ -101,7 +107,7 @@ namespace SnakeGame
                         case ConsoleKey.UpArrow: //UP
                             dx = 0;
                             dy = -1;
-                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.Red;              
                             break;
                         case ConsoleKey.DownArrow: // DOWN
                             dx = 0;
@@ -111,11 +117,13 @@ namespace SnakeGame
                         case ConsoleKey.LeftArrow: //LEFT
                             dx = -1;
                             dy = 0;
+                            Console.SetCursorPosition(x, y);
                             Console.ForegroundColor = ConsoleColor.Green;
                             break;
                         case ConsoleKey.RightArrow: //RIGHT
                             dx = 1;
                             dy = 0;
+                            Console.SetCursorPosition(x, y);
                             Console.ForegroundColor = ConsoleColor.Black;
                             break;
                         case ConsoleKey.Escape: //END
@@ -127,7 +135,7 @@ namespace SnakeGame
                 // find the current position in the console grid & erase the character there if don't want to see the trail
                 Console.SetCursorPosition(x, y);
                 if (trail == false)
-                    Console.Write(' ');
+                    Console.Write(snakeL);
 
                 // calculate the new position
                 // note x set to 0 because we use the whole width, but y set to 1 because we use top row for instructions
@@ -187,7 +195,10 @@ namespace SnakeGame
                 //Increase score when the player ate a food
                 if(x == foodX && y == foodY)
                 {
+;                   ch += "*";
+                    snakeL += " ";
                     gameScore++;
+
                 }
 
                 //Set a condition to the obstacle when the snake hits it
@@ -213,7 +224,6 @@ namespace SnakeGame
                 {
                     gameLive = false;
                 }
-
 
             } while (gameLive);
         }
