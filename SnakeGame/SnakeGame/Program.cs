@@ -201,29 +201,53 @@ namespace SnakeGame
 
                 }
 
-                //Set a condition to the obstacle when the snake hits it
+                
+
+                //The game ends when the snake hits the obstacles
                 if (x == obstacles1X && y == obstacles1Y)
                 {
-                    gameLive = false;
+                    Console.Clear();
+                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                    return;
                 }
                
 
                 if (x == obstacles2X && y == obstacles2Y)
                 {
-                    gameLive = false;
+                    Console.Clear();
+                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                    return;
                 }
 
 
                 if (x == obstacles3X && y == obstacles3Y)
                 {
-                    gameLive = false;
+                    Console.Clear();
+                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                    return;
                 }
 
 
                 if (x == obstacles4X && y == obstacles4Y)
                 {
-                    gameLive = false;
+                    Console.Clear();
+                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                    return;
                 }
+
+                
 
             } while (gameLive);
         }
