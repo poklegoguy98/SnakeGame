@@ -201,7 +201,16 @@ namespace SnakeGame
 
                 }
 
-                
+                //Winning requirement: Snake eats 5 food
+                if (gameScore == 5)
+                {
+                    Console.Clear();
+                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("GAME CLEAR!!\n                                                   YOU WIN!!!\n                                               PRESS ENTER TO EXIT");
+                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                    return;
+                }
 
                 //The game ends when the snake hits the obstacles
                 if (x == obstacles1X && y == obstacles1Y)
