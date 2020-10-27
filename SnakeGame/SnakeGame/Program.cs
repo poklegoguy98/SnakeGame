@@ -1,13 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Json;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SnakeGame
 {
+    //Structure for defining the coordinates in the game
+    struct Coordinate
+    {
+        public int row;
+        public int column;
+        public Coordinate(int row, int column)
+        {
+            this.row = row;
+            this.column = column;
+        }
+    }
+
     class Program
     {
+        // method to declare an array to store the directions of the snake
+        public void Direction(Coordinate[] direction)
+        {
+            direction[0] = new Coordinate(0,1); //right
+            direction[1] = new Coordinate(0,-1); //left
+            direction[2] = new Coordinate(1,0); //down
+            direction[3] = new Coordinate(-1,0); //up
+        }
+
         static void Main(string[] args)
         {
             // start game
@@ -15,7 +40,6 @@ namespace SnakeGame
             Console.ReadKey();
 
             // display this char on the console during the game
-            string ch = "***";
             bool gameLive = true;
             ConsoleKeyInfo consoleKey; // holds whatever key is pressed
 
@@ -24,7 +48,27 @@ namespace SnakeGame
             int dx = 1, dy = 0;
             int consoleWidthLimit = 79;
             int consoleHeightLimit = 24;
-            
+            byte right = 0, left = 1, down = 2, up = 3;
+            int direc = right;
+            Program program = new Program();
+            Coordinate[] direction = new Coordinate[4];
+            program.Direction(direction);
+
+            // initialise and generate the snake body
+            // set the snake to start moving from the top left corner by default
+            Queue<Coordinate> theSnek = new Queue<Coordinate>();
+            int i;
+            for(i = 0; i <=3; i++)
+            {
+                theSnek.Enqueue(new Coordinate(2, i));
+            }
+            foreach(Coordinate coordinate in theSnek)
+            {
+                Console.SetCursorPosition(coordinate.column, coordinate.row);
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write("*");
+            }
+
             // clear to color
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.Clear();
@@ -73,15 +117,15 @@ namespace SnakeGame
             Console.SetCursorPosition(obstacles4X, obstacles4Y);
             Console.Write(obs);
 
-
             //time span variables
             int timer = 0;
             bool five = true;
+            bool stop = true; 
 
             //score variable
             int gameScore = 0;
 
-            string snakeL = "   ";
+            string snakeL = " ";
 
             do // until escape
             {
@@ -90,9 +134,8 @@ namespace SnakeGame
                 ConsoleColor cc = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.SetCursorPosition(0, 0);
-                Console.WriteLine("Arrows move up/down/right/left. Press 'esc' quit.");
+                Console.WriteLine("Arrows move up/down/right/left. Press 'esc' quit. Reach 5 points to win the game.");
                 Console.WriteLine("Your score: " + gameScore);
-                Console.SetCursorPosition(x, y);
                 Console.ForegroundColor = cc;
                 timer++;
 
@@ -105,24 +148,32 @@ namespace SnakeGame
                     {
 
                         case ConsoleKey.UpArrow: //UP
-                            dx = 0;
-                            dy = -1;
+                            if(direc != down)
+                            {
+                                direc = up;
+                            }
                             Console.ForegroundColor = ConsoleColor.Red;              
                             break;
                         case ConsoleKey.DownArrow: // DOWN
-                            dx = 0;
-                            dy = 1;
+                            if(direc != up)
+                            {
+                                direc = down;
+                            }
                             Console.ForegroundColor = ConsoleColor.Cyan;
                             break;
                         case ConsoleKey.LeftArrow: //LEFT
-                            dx = -1;
-                            dy = 0;
+                            if(direc != right)
+                            {
+                                direc = left;
+                            }
                             Console.SetCursorPosition(x, y);
                             Console.ForegroundColor = ConsoleColor.Green;
                             break;
                         case ConsoleKey.RightArrow: //RIGHT
-                            dx = 1;
-                            dy = 0;
+                            if(direc != left)
+                            {
+                                direc = right;
+                            }    
                             Console.SetCursorPosition(x, y);
                             Console.ForegroundColor = ConsoleColor.Black;
                             break;
@@ -132,10 +183,31 @@ namespace SnakeGame
                     }
                 }
 
-                // find the current position in the console grid & erase the character there if don't want to see the trail
-                Console.SetCursorPosition(x, y);
-                if (trail == false)
-                    Console.Write(snakeL);
+                // initialise and indicate the head of the snake
+                Coordinate snakeH = theSnek.Last();
+                Coordinate direcN = direction[direc];
+                int snakeNR = snakeH.row + direcN.row;
+                int snakeNC = snakeH.column + direcN.column;
+                Coordinate snakeHN = new Coordinate(snakeNR, snakeNC);
+
+                // set conditions when the snake went out of the game window
+                if (snakeHN.column < 0)
+                {
+                    snakeHN.column = consoleWidthLimit - 1;
+                }
+                if (snakeHN.row < 2)
+                {
+                    snakeHN.row = consoleHeightLimit - 1;
+                }
+                if (snakeHN.column >= consoleWidthLimit)
+                {
+                    snakeHN.column = 0;
+                }
+                if (snakeHN.row >= consoleHeightLimit)
+                {
+                    snakeHN.row = 2;
+                }
+                
 
                 // calculate the new position
                 // note x set to 0 because we use the whole width, but y set to 1 because we use top row for instructions
@@ -151,21 +223,28 @@ namespace SnakeGame
                 if (y < 2)
                     y = consoleHeightLimit;
 
-                // write the character in the new position
-                Console.SetCursorPosition(x, y);
-                Console.Write(ch);
-
                 // pause to allow eyeballs to keep up
                 System.Threading.Thread.Sleep(delayInMillisecs);
-                
+
+                Console.SetCursorPosition(snakeH.column, snakeH.row);
+                Console.Write("*");
+                theSnek.Enqueue(snakeHN);
+
                 //set a timer to change the position of the food every 5 seconds
-                if(timer == 100)
+                if (timer == 100)
                 {
+                    Console.SetCursorPosition(foodX, foodY);
+                    if(five == true)
+                    {
+                        Console.Write(snakeL);
+                    }
+                    foodX = randomNum.Next(1, consoleWidthLimit);
+                    foodY = randomNum.Next(2, consoleHeightLimit);
                     do
                     {
-                        if (obstacles1X != foodX && obstacles1Y != foodY || 
-                            obstacles2X != foodX && obstacles2Y != foodY || 
-                            obstacles3X != foodX && obstacles3Y != foodY || 
+                        if (obstacles1X != foodX && obstacles1Y != foodY ||
+                            obstacles2X != foodX && obstacles2Y != foodY ||
+                            obstacles3X != foodX && obstacles3Y != foodY ||
                             obstacles4X != foodX && obstacles4Y != foodY)
                         {
                             Console.SetCursorPosition(foodX, foodY);
@@ -176,29 +255,48 @@ namespace SnakeGame
                             foodY = randomNum.Next(2, consoleHeightLimit);
                             Console.SetCursorPosition(foodX, foodY);
                         }
-                    } while (obstacles1X == foodX && obstacles1Y == foodY || 
-                    obstacles2X == foodX && obstacles2Y == foodY || 
-                    obstacles3X == foodX && obstacles3Y == foodY || 
+                    } while (obstacles1X == foodX && obstacles1Y == foodY ||
+                    obstacles2X == foodX && obstacles2Y == foodY ||
+                    obstacles3X == foodX && obstacles3Y == foodY ||
                     obstacles4X == foodX && obstacles4Y == foodY);
-
-                    if(five == true)
-                    {
-                        Console.Write(" ");
-                    }
-                    foodX = randomNum.Next(1, consoleWidthLimit);
-                    foodY = randomNum.Next(2, consoleHeightLimit);
-                    Console.SetCursorPosition(foodX, foodY);
                     Console.Write(foodS);
                     timer = 0;
                 }
 
                 //Increase score when the player ate a food
-                if(x == foodX && y == foodY)
+                if(snakeHN.column == foodX && snakeHN.row == foodY)
                 {
-;                   ch += "*";
-                    snakeL += " ";
                     gameScore++;
-
+                    foodX = randomNum.Next(1, consoleWidthLimit);
+                    foodY = randomNum.Next(2, consoleHeightLimit);
+                    do
+                    {
+                        if (obstacles1X != foodX && obstacles1Y != foodY ||
+                            obstacles2X != foodX && obstacles2Y != foodY ||
+                            obstacles3X != foodX && obstacles3Y != foodY ||
+                            obstacles4X != foodX && obstacles4Y != foodY)
+                        {
+                            Console.SetCursorPosition(foodX, foodY);
+                        }
+                        else
+                        {
+                            foodX = randomNum.Next(1, consoleWidthLimit);
+                            foodY = randomNum.Next(2, consoleHeightLimit);
+                            Console.SetCursorPosition(foodX, foodY);
+                        }
+                    } while (obstacles1X == foodX && obstacles1Y == foodY ||
+                    obstacles2X == foodX && obstacles2Y == foodY ||
+                    obstacles3X == foodX && obstacles3Y == foodY ||
+                    obstacles4X == foodX && obstacles4Y == foodY);
+                    Console.Write(foodS);
+                    timer = 0;
+                }
+                else
+                {
+                    // find the coordinate and erase the trail behind the snake body
+                    Coordinate trailL = theSnek.Dequeue();
+                    Console.SetCursorPosition(trailL.column, trailL.row);
+                    Console.Write(snakeL);
                 }
 
                 //Winning requirement: Snake eats 5 food
@@ -213,7 +311,7 @@ namespace SnakeGame
                 }
 
                 //The game ends when the snake hits the obstacles
-                if (x == obstacles1X && y == obstacles1Y)
+                if (snakeHN.column == obstacles1X && snakeHN.row == obstacles1Y)
                 {
                     Console.Clear();
                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
@@ -223,8 +321,7 @@ namespace SnakeGame
                     return;
                 }
                
-
-                if (x == obstacles2X && y == obstacles2Y)
+                if (snakeHN.column == obstacles2X && snakeHN.row == obstacles2Y)
                 {
                     Console.Clear();
                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
@@ -234,8 +331,7 @@ namespace SnakeGame
                     return;
                 }
 
-
-                if (x == obstacles3X && y == obstacles3Y)
+                if (snakeHN.column == obstacles3X && snakeHN.row == obstacles3Y)
                 {
                     Console.Clear();
                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
@@ -245,8 +341,7 @@ namespace SnakeGame
                     return;
                 }
 
-
-                if (x == obstacles4X && y == obstacles4Y)
+                if (snakeHN.column == obstacles4X && snakeHN.row == obstacles4Y)
                 {
                     Console.Clear();
                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
@@ -255,8 +350,6 @@ namespace SnakeGame
                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                     return;
                 }
-
-                
 
             } while (gameLive);
         }
