@@ -10,7 +10,6 @@ using System.Runtime.Serialization.Json;
 using System.Security.Cryptography.X509Certificates;
 using WMPLib;
 
-
 namespace SnakeGame
 {
     //Structure for defining the coordinates in the game
@@ -195,17 +194,20 @@ namespace SnakeGame
             {
                 //Obtain the music file from the resource folder
                 WindowsMediaPlayer menuMusic = new WindowsMediaPlayer();
-                menuMusic.URL = @"SnakeGame\SnakeGame\SnakeGame\bin\Debug\Game-Menu.mp3";
+                string mmName = "Game-Menu.mp3";
+                menuMusic.URL = AppDomain.CurrentDomain.BaseDirectory + mmName;             
                 menuMusic.controls.play(); // Plays the music on the menu
 
                 //Obtain the music file from the resource folder
                 WindowsMediaPlayer hitObstacle = new WindowsMediaPlayer();
-                hitObstacle.URL = @"SnakeGame\SnakeGame\SnakeGame\bin\Debug\teleport.wav";
+                string hoName = "teleport.wav";
+                hitObstacle.URL = AppDomain.CurrentDomain.BaseDirectory + hoName;            
                 hitObstacle.controls.stop();
 
                 //Obtain the music file from the resource folder
                 WindowsMediaPlayer eatFood = new WindowsMediaPlayer();
-                eatFood.URL = @"SnakeGame\SnakeGame\SnakeGame\bin\Debug\click.wav";
+                string efName = "click.wav";
+                eatFood.URL = AppDomain.CurrentDomain.BaseDirectory + efName;                
                 eatFood.controls.stop();
 
 
