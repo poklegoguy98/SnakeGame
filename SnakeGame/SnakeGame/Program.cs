@@ -8,6 +8,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Json;
 using System.Security.Cryptography.X509Certificates;
+using WMPLib;
+
 
 namespace SnakeGame
 {
@@ -47,12 +49,12 @@ namespace SnakeGame
                 {
                     Console.BackgroundColor = ConsoleColor.Blue;
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.SetCursorPosition(47, 11 + i);
+                    Console.SetCursorPosition(30, 11 + i);
                     Console.WriteLine(options[i]);
                 }
                 else
                 {
-                    Console.SetCursorPosition(47, 11 + i);
+                    Console.SetCursorPosition(30, 11 + i);
                     Console.WriteLine(options[i]);
                 }
                 Console.ResetColor();
@@ -101,12 +103,12 @@ namespace SnakeGame
                 {
                     Console.BackgroundColor = ConsoleColor.Blue;
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.SetCursorPosition(49, 10 + i);
+                    Console.SetCursorPosition(30, 10 + i);
                     Console.WriteLine(options[i]);
                 }
                 else
                 {
-                    Console.SetCursorPosition(49, 10 + i);
+                    Console.SetCursorPosition(30, 10 + i);
                     Console.WriteLine(options[i]);
                 }
                 Console.ResetColor();
@@ -146,10 +148,12 @@ namespace SnakeGame
 
         static void Main(string[] args)
         {
+
             // display this char on the console during the game
             bool gameLive = true;
             ConsoleKeyInfo consoleKey; // holds whatever key is pressed
-
+            Console.SetWindowSize(85, 25); // Set a fix size for the program when debug
+            Console.SetBufferSize(85, 25); // Use to remove the scroll bar
             // location info & display
             int x = 0, y = 2; // y is 2 to allow the top row for directions & space
             int dx = 1, dy = 0;
@@ -163,19 +167,19 @@ namespace SnakeGame
             program.Direction(direction);
 
             // start menu logo and description
-            Console.SetCursorPosition(40, 5);
+            Console.SetCursorPosition(28, 5);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("========================");
-            Console.SetCursorPosition(40, 6);
+            Console.SetCursorPosition(28, 6);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("||     SNAKE GAME     ||");
-            Console.SetCursorPosition(40, 7);
+            Console.SetCursorPosition(28, 7);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("========================");
-            Console.SetCursorPosition(39, 8);
+            Console.SetCursorPosition(28, 8);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Welcome to the Snake Game!");
-            Console.SetCursorPosition(27, 9);
+            Console.SetCursorPosition(19, 9);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Please select one of the option below and press Enter.");
 
@@ -189,6 +193,22 @@ namespace SnakeGame
 
             do
             {
+                //Obtain the music file from the resource folder
+                WindowsMediaPlayer menuMusic = new WindowsMediaPlayer();
+                menuMusic.URL = @"C:\Users\Asus\SnakeGame\SnakeGame\SnakeGame\bin\Debug\Game-Menu.mp3";
+                menuMusic.controls.play(); // Plays the music on the menu
+
+                //Obtain the music file from the resource folder
+                WindowsMediaPlayer hitObstacle = new WindowsMediaPlayer();
+                hitObstacle.URL = @"C:\Users\Asus\SnakeGame\SnakeGame\SnakeGame\bin\Debug\teleport.wav";
+                hitObstacle.controls.stop();
+
+                //Obtain the music file from the resource folder
+                WindowsMediaPlayer eatFood = new WindowsMediaPlayer();
+                eatFood.URL = @"C:\Users\Asus\SnakeGame\SnakeGame\SnakeGame\bin\Debug\click.wav";
+                eatFood.controls.stop();
+
+
                 optionSelected = configureStartMenu(menuOptions);
                 switch (optionSelected)
                 {
@@ -196,16 +216,16 @@ namespace SnakeGame
                     case "Play Game":
                             Console.Clear();
                             // start game
-                            Console.SetCursorPosition(40, 5);
+                            Console.SetCursorPosition(28, 5);
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.WriteLine("========================");
-                            Console.SetCursorPosition(40, 6);
+                            Console.SetCursorPosition(28, 6);
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.WriteLine("||   THE SNAKE GAME   ||");
-                            Console.SetCursorPosition(40, 7);
+                            Console.SetCursorPosition(28, 7);
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.WriteLine("========================");
-                            Console.SetCursorPosition(39, 8);
+                            Console.SetCursorPosition(27, 8);
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine("Please choose a difficulty!");
 
@@ -218,18 +238,22 @@ namespace SnakeGame
 
                             do
                             {
-                                difficultySelected = configureDifficultyMenu(difficultyOptions);
+                            
+                            difficultySelected = configureDifficultyMenu(difficultyOptions);
                                 switch (difficultySelected)
                                 {
+
                                     //EASY MODE
                                     //Snake speed = 70
                                     //Number of obstacles = 4
                                     //Food timer = 100
                                     //Score to win = 10
                                     case "Easy":
-                                            // initialise and generate the snake body
-                                            // set the snake to start moving from the top left corner by default
-                                            Queue<Coordinate> theSnek = new Queue<Coordinate>();
+                                    // initialise and generate the snake body
+                                    // set the snake to start moving from the top left corner by default
+                              
+                                    menuMusic.controls.stop(); // stops the menu music when entered a chosen mode
+                                    Queue<Coordinate> theSnek = new Queue<Coordinate>();
                                             int i;
                                             for (i = 0; i <= 3; i++)
                                             {
@@ -243,7 +267,7 @@ namespace SnakeGame
                                             }
 
                                             // clear to color
-                                            Console.BackgroundColor = ConsoleColor.DarkGray;
+                                            Console.BackgroundColor = ConsoleColor.Black;
                                             Console.Clear();
 
                                             // delay to slow down the character movement so you can see it
@@ -264,7 +288,7 @@ namespace SnakeGame
 
                                             //Generate random obstacle when the game starts
                                             int obstacles1X, obstacles1Y, obstacles2X, obstacles2Y, obstacles3X, obstacles3Y, obstacles4X, obstacles4Y = 0;
-                                            string obs = "||";
+                                            string obs = "█";
                                             obstacles1X = randomNum.Next(1, consoleWidthLimit);
                                             obstacles1Y = randomNum.Next(3, consoleHeightLimit);
 
@@ -301,10 +325,10 @@ namespace SnakeGame
 
                                             do // until escape
                                             {
-                                                // print directions at top, then restore position
-                                                // save then restore current color
+                                        // print directions at top, then restore position
+                                        // save then restore current color
                                                 ConsoleColor cc = Console.ForegroundColor;
-                                                Console.ForegroundColor = ConsoleColor.Black;
+                                                Console.ForegroundColor = ConsoleColor.Green;
                                                 Console.SetCursorPosition(0, 0);
                                                 Console.WriteLine("Arrows move up/down/right/left. Press 'esc' quit. Reach 10 points to win the game.");
                                                 Console.WriteLine("Your score: " + gameScore);
@@ -347,7 +371,7 @@ namespace SnakeGame
                                                                 direc = right;
                                                             }
                                                             Console.SetCursorPosition(x, y);
-                                                            Console.ForegroundColor = ConsoleColor.Black;
+                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                             break;
                                                         case ConsoleKey.Escape: //END
                                                             gameLive = false;
@@ -438,6 +462,7 @@ namespace SnakeGame
                                                 //Increase score when the player ate a food
                                                 if (snakeHN.column == foodX && snakeHN.row == foodY)
                                                 {
+                                                    eatFood.controls.play(); // play this sound effect when a food was ate
                                                     gameScore++;
                                                     foodX = randomNum.Next(1, consoleWidthLimit);
                                                     foodY = randomNum.Next(2, consoleHeightLimit);
@@ -477,7 +502,7 @@ namespace SnakeGame
                                                     Console.Clear();
                                                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
                                                     Console.ForegroundColor = ConsoleColor.Green;
-                                                    Console.WriteLine("GAME CLEAR!!\n                                                   YOU WIN!!!\n                                               PRESS ENTER TO EXIT");
+                                                    Console.WriteLine("GAME CLEAR!!\n                                       YOU WIN!!!\n                                    PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
                                                 }
@@ -485,40 +510,44 @@ namespace SnakeGame
                                                 //The game ends when the snake hits the obstacles
                                                 if (snakeHN.column == obstacles1X && snakeHN.row == obstacles1Y)
                                                 {
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
                                                     Console.Clear();
-                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);                                                
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
                                                 }
 
                                                 if (snakeHN.column == obstacles2X && snakeHN.row == obstacles2Y)
                                                 {
-                                                    Console.Clear();
-                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
+                                                    Console.Clear();                                               
+                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);                                                        
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
                                                 }
 
                                                 if (snakeHN.column == obstacles3X && snakeHN.row == obstacles3Y)
                                                 {
-                                                    Console.Clear();
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
+                                                    Console.Clear();                                                    
                                                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
                                                 }
 
                                                 if (snakeHN.column == obstacles4X && snakeHN.row == obstacles4Y)
                                                 {
-                                                    Console.Clear();
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
+                                                    Console.Clear();                                                 
                                                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
                                                 }
@@ -526,15 +555,16 @@ namespace SnakeGame
                                             } while (gameLive);
                                         break;
 
-                                //HARD MODE
-                                //Snake speed = 35
-                                //Number of obstacles = 8
-                                //Food timer = 70
-                                //Score to win = 15
-                                case "Hard":
-                                            // initialise and generate the snake body
-                                            // set the snake to start moving from the top left corner by default
-                                            Queue<Coordinate> theSnek2 = new Queue<Coordinate>();
+                                    //HARD MODE
+                                    //Snake speed = 35
+                                    //Number of obstacles = 8
+                                    //Food timer = 70
+                                    //Score to win = 15
+                                    case "Hard":
+                                    menuMusic.controls.stop();
+                                    // initialise and generate the snake body
+                                    // set the snake to start moving from the top left corner by default
+                                    Queue<Coordinate> theSnek2 = new Queue<Coordinate>();
                                             int j;
                                             for (j = 0; j <= 3; j++)
                                             {
@@ -548,7 +578,7 @@ namespace SnakeGame
                                             }
 
                                             // clear to color
-                                            Console.BackgroundColor = ConsoleColor.DarkGray;
+                                            Console.BackgroundColor = ConsoleColor.Black;
                                             Console.Clear();
 
                                             // delay to slow down the character movement so you can see it
@@ -567,7 +597,7 @@ namespace SnakeGame
 
                                             //Generate random obstacle when the game starts
                                             int obstacles1X2, obstacles1Y2, obstacles2X2, obstacles2Y2, obstacles3X2, obstacles3Y2, obstacles4X2, obstacles4Y2;
-                                            string obs2 = "||";
+                                            string obs2 = "█";
 
                                             obstacles1X2 = randomNum2.Next(1, consoleWidthLimit);
                                             obstacles1Y2 = randomNum2.Next(3, consoleHeightLimit);
@@ -624,9 +654,9 @@ namespace SnakeGame
                                                 // print directions at top, then restore position
                                                 // save then restore current color
                                                 ConsoleColor cc = Console.ForegroundColor;
-                                                Console.ForegroundColor = ConsoleColor.Black;
+                                                Console.ForegroundColor = ConsoleColor.Green;
                                                 Console.SetCursorPosition(0, 0);
-                                                Console.WriteLine("Arrows move up/down/right/left. Press 'esc' quit. Reach 10 points to win the game.");
+                                                Console.WriteLine("Arrows move up/down/right/left. Press 'esc' quit. Reach 15 points to win the game.");
                                                 Console.WriteLine("Your score: " + gameScore2);
                                                 Console.ForegroundColor = cc;
                                                 timer2++;
@@ -667,7 +697,7 @@ namespace SnakeGame
                                                                 direc = right;
                                                             }
                                                             Console.SetCursorPosition(x, y);
-                                                            Console.ForegroundColor = ConsoleColor.Black;
+                                                            Console.ForegroundColor = ConsoleColor.Yellow;
                                                             break;
                                                         case ConsoleKey.Escape: //END
                                                             gameLive = false;
@@ -763,6 +793,7 @@ namespace SnakeGame
                                                 //Increase score when the player ate a food
                                                 if (snakeHN.column == foodX && snakeHN.row == foodY)
                                                 {
+                                                    eatFood.controls.play(); // play this sound effect when a food was ate
                                                     gameScore2++;
                                                     foodX = randomNum2.Next(1, consoleWidthLimit);
                                                     foodY = randomNum2.Next(2, consoleHeightLimit);
@@ -807,7 +838,7 @@ namespace SnakeGame
                                                     Console.Clear();
                                                     Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
                                                     Console.ForegroundColor = ConsoleColor.Green;
-                                                    Console.WriteLine("GAME CLEAR!!\n                                                   YOU WIN!!!\n                                               PRESS ENTER TO EXIT");
+                                                    Console.WriteLine("GAME CLEAR!!\n                                       YOU WIN!!!\n                                    PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
                                                 }
@@ -815,41 +846,45 @@ namespace SnakeGame
                                                 //The game ends when the snake hits the obstacles
                                                 if (snakeHN.column == obstacles1X2 && snakeHN.row == obstacles1Y2)
                                                 {
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
                                                     Console.Clear();
-                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);                                                  
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
-                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
+                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }                                                   
                                                     return;
                                                 }
 
                                                 if (snakeHN.column == obstacles2X2 && snakeHN.row == obstacles2Y2)
                                                 {
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
                                                     Console.Clear();
-                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);                                                    
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
-                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
+                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }                                                   
                                                     return;
                                                 }
                                                 
                                                 if (snakeHN.column == obstacles3X2 && snakeHN.row == obstacles3Y2)
                                                 {
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
                                                     Console.Clear();
-                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);                                                   
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
-                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
+                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }                                                   
                                                     return;
                                                 }
 
                                                 if (snakeHN.column == obstacles4X2 && snakeHN.row == obstacles4Y2)
                                                 {
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
                                                     Console.Clear();
-                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                                                    Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);                                                   
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
-                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                                                    Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
+                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }                                                
                                                     return;
                                                 }
 
@@ -857,11 +892,12 @@ namespace SnakeGame
                                                 {
                                                     if (snakeHN.column == extraObsX[l] && snakeHN.row == extraObsY[l])
                                                     {
+                                                        hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
                                                         Console.Clear();
-                                                        Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);
+                                                        Console.SetCursorPosition(Console.WindowWidth / 3 + 10, Console.WindowHeight / 3 + 2);                                                       
                                                         Console.ForegroundColor = ConsoleColor.Red;
-                                                        Console.WriteLine("GAME OVER!!\n                                               PRESS ENTER TO EXIT");
-                                                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                                                        Console.WriteLine("GAME OVER!!\n                                 PRESS ENTER TO EXIT");
+                                                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }                                                    
                                                         return;
                                                     }
                                                 }
