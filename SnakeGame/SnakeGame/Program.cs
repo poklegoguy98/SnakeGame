@@ -49,12 +49,12 @@ namespace SnakeGame
                 {
                     Console.BackgroundColor = ConsoleColor.Blue;
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.SetCursorPosition(30, 11 + i);
+                    Console.SetCursorPosition(35, 11 + i);
                     Console.WriteLine(options[i]);
                 }
                 else
                 {
-                    Console.SetCursorPosition(30, 11 + i);
+                    Console.SetCursorPosition(35, 11 + i);
                     Console.WriteLine(options[i]);
                 }
                 Console.ResetColor();
@@ -103,12 +103,12 @@ namespace SnakeGame
                 {
                     Console.BackgroundColor = ConsoleColor.Blue;
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.SetCursorPosition(30, 10 + i);
+                    Console.SetCursorPosition(37, 10 + i);
                     Console.WriteLine(options[i]);
                 }
                 else
                 {
-                    Console.SetCursorPosition(30, 10 + i);
+                    Console.SetCursorPosition(37, 10 + i);
                     Console.WriteLine(options[i]);
                 }
                 Console.ResetColor();
@@ -176,10 +176,10 @@ namespace SnakeGame
             Console.SetCursorPosition(28, 7);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("========================");
-            Console.SetCursorPosition(28, 8);
+            Console.SetCursorPosition(27, 8);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Welcome to the Snake Game!");
-            Console.SetCursorPosition(19, 9);
+            Console.SetCursorPosition(15, 9);
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Please select one of the option below and press Enter.");
 
@@ -195,17 +195,17 @@ namespace SnakeGame
             {
                 //Obtain the music file from the resource folder
                 WindowsMediaPlayer menuMusic = new WindowsMediaPlayer();
-                menuMusic.URL = @"C:\Users\Asus\SnakeGame\SnakeGame\SnakeGame\bin\Debug\Game-Menu.mp3";
+                menuMusic.URL = @"SnakeGame\SnakeGame\SnakeGame\bin\Debug\Game-Menu.mp3";
                 menuMusic.controls.play(); // Plays the music on the menu
 
                 //Obtain the music file from the resource folder
                 WindowsMediaPlayer hitObstacle = new WindowsMediaPlayer();
-                hitObstacle.URL = @"C:\Users\Asus\SnakeGame\SnakeGame\SnakeGame\bin\Debug\teleport.wav";
+                hitObstacle.URL = @"SnakeGame\SnakeGame\SnakeGame\bin\Debug\teleport.wav";
                 hitObstacle.controls.stop();
 
                 //Obtain the music file from the resource folder
                 WindowsMediaPlayer eatFood = new WindowsMediaPlayer();
-                eatFood.URL = @"C:\Users\Asus\SnakeGame\SnakeGame\SnakeGame\bin\Debug\click.wav";
+                eatFood.URL = @"SnakeGame\SnakeGame\SnakeGame\bin\Debug\click.wav";
                 eatFood.controls.stop();
 
 
@@ -249,10 +249,11 @@ namespace SnakeGame
                                     //Food timer = 100
                                     //Score to win = 10
                                     case "Easy":
+                                    
+                                    menuMusic.controls.stop(); // stops the menu music when entered a chosen mode
+                                                               
                                     // initialise and generate the snake body
                                     // set the snake to start moving from the top left corner by default
-                              
-                                    menuMusic.controls.stop(); // stops the menu music when entered a chosen mode
                                     Queue<Coordinate> theSnek = new Queue<Coordinate>();
                                             int i;
                                             for (i = 0; i <= 3; i++)
@@ -588,11 +589,13 @@ namespace SnakeGame
                                             bool trail2 = false;
 
                                             //generate a food when the game start
+                                            int foodX2;
+                                            int foodY2;
                                             Random randomNum2 = new Random();
                                             char foodS2 = '$';
-                                            foodX = randomNum2.Next(1, consoleWidthLimit);
-                                            foodY = randomNum2.Next(2, consoleHeightLimit);
-                                            Console.SetCursorPosition(foodX, foodY);
+                                            foodX2 = randomNum2.Next(1, consoleWidthLimit);
+                                            foodY2 = randomNum2.Next(2, consoleHeightLimit);
+                                            Console.SetCursorPosition(foodX2, foodY2);
                                             Console.Write(foodS2);
 
                                             //Generate random obstacle when the game starts
@@ -755,71 +758,71 @@ namespace SnakeGame
                                                 // set a timer to change the position of the food after a time interval
                                                 if (timer2 == 70)
                                                 {
-                                                    Console.SetCursorPosition(foodX, foodY);
+                                                    Console.SetCursorPosition(foodX2, foodY2);
                                                     if (five2 == true)
                                                     {
                                                         Console.Write(snakeL2);
                                                     }
-                                                    foodX = randomNum2.Next(1, consoleWidthLimit);
-                                                    foodY = randomNum2.Next(2, consoleHeightLimit);
+                                                    foodX2 = randomNum2.Next(1, consoleWidthLimit);
+                                                    foodY2 = randomNum2.Next(2, consoleHeightLimit);
                                                     for (int l = 0; l < 4; l++)
                                                     {
                                                         do
                                                         {
-                                                            if (obstacles1X2 != foodX && obstacles1Y2 != foodY ||
-                                                                obstacles2X2 != foodX && obstacles2Y2 != foodY ||
-                                                                obstacles3X2 != foodX && obstacles3Y2 != foodY ||
-                                                                obstacles4X2 != foodX && obstacles4Y2 != foodY ||
-                                                                extraObsX[l] != foodX && extraObsY[l] != foodY)
+                                                            if (obstacles1X2 != foodX2 && obstacles1Y2 != foodY2 ||
+                                                                obstacles2X2 != foodX2 && obstacles2Y2 != foodY2 ||
+                                                                obstacles3X2 != foodX2 && obstacles3Y2 != foodY2 ||
+                                                                obstacles4X2 != foodX2 && obstacles4Y2 != foodY2 ||
+                                                                extraObsX[l] != foodX2 && extraObsY[l] != foodY2)
                                                             {
-                                                                Console.SetCursorPosition(foodX, foodY);
+                                                                Console.SetCursorPosition(foodX2, foodY2);
                                                             }
                                                             else
                                                             {
-                                                                foodX = randomNum2.Next(1, consoleWidthLimit);
-                                                                foodY = randomNum2.Next(2, consoleHeightLimit);
-                                                                Console.SetCursorPosition(foodX, foodY);
+                                                                foodX2 = randomNum2.Next(1, consoleWidthLimit);
+                                                                foodY2 = randomNum2.Next(2, consoleHeightLimit);
+                                                                Console.SetCursorPosition(foodX2, foodY2);
                                                             }
-                                                        } while (obstacles1X2 == foodX && obstacles1Y2 == foodY ||
-                                                        obstacles2X2 == foodX && obstacles2Y2 == foodY ||
-                                                        obstacles3X2 == foodX && obstacles3Y2 == foodY ||
-                                                        obstacles4X2 == foodX && obstacles4Y2 == foodY ||
-                                                        extraObsX[l] == foodX && extraObsY[l] == foodY);
+                                                        } while (obstacles1X2 == foodX2 && obstacles1Y2 == foodY2 ||
+                                                        obstacles2X2 == foodX2 && obstacles2Y2 == foodY2 ||
+                                                        obstacles3X2 == foodX2 && obstacles3Y2 == foodY2 ||
+                                                        obstacles4X2 == foodX2 && obstacles4Y2 == foodY2 ||
+                                                        extraObsX[l] == foodX2 && extraObsY[l] == foodY2);
                                                     }
                                                     Console.Write(foodS2);
                                                     timer2 = 0;
                                                 }
 
                                                 //Increase score when the player ate a food
-                                                if (snakeHN.column == foodX && snakeHN.row == foodY)
+                                                if (snakeHN.column == foodX2 && snakeHN.row == foodY2)
                                                 {
                                                     eatFood.controls.play(); // play this sound effect when a food was ate
                                                     gameScore2++;
-                                                    foodX = randomNum2.Next(1, consoleWidthLimit);
-                                                    foodY = randomNum2.Next(2, consoleHeightLimit);
+                                                    foodX2 = randomNum2.Next(1, consoleWidthLimit);
+                                                    foodY2 = randomNum2.Next(2, consoleHeightLimit);
                                                     for (int l = 0; l < 4; l++)
                                                     {
                                                         do
                                                         {
-                                                            if (obstacles1X2 != foodX && obstacles1Y2 != foodY ||
-                                                                obstacles2X2 != foodX && obstacles2Y2 != foodY ||
-                                                                obstacles3X2 != foodX && obstacles3Y2 != foodY ||
-                                                                obstacles4X2 != foodX && obstacles4Y2 != foodY ||
-                                                                extraObsX[l] != foodX && extraObsY[l] != foodY)
+                                                            if (obstacles1X2 != foodX2 && obstacles1Y2 != foodY2 ||
+                                                                obstacles2X2 != foodX2 && obstacles2Y2 != foodY2 ||
+                                                                obstacles3X2 != foodX2 && obstacles3Y2 != foodY2 ||
+                                                                obstacles4X2 != foodX2 && obstacles4Y2 != foodY2 ||
+                                                                extraObsX[l] != foodX2 && extraObsY[l] != foodY2)
                                                             {
-                                                                Console.SetCursorPosition(foodX, foodY);
+                                                                Console.SetCursorPosition(foodX2, foodY2);
                                                             }
                                                             else
                                                             {
-                                                                foodX = randomNum2.Next(1, consoleWidthLimit);
-                                                                foodY = randomNum2.Next(2, consoleHeightLimit);
-                                                                Console.SetCursorPosition(foodX, foodY);
+                                                                foodX2 = randomNum2.Next(1, consoleWidthLimit);
+                                                                foodY2 = randomNum2.Next(2, consoleHeightLimit);
+                                                                Console.SetCursorPosition(foodX2, foodY2);
                                                             }
-                                                        } while (obstacles1X2 == foodX && obstacles1Y2 == foodY ||
-                                                        obstacles2X2 == foodX && obstacles2Y2 == foodY ||
-                                                        obstacles3X2 == foodX && obstacles3Y2 == foodY ||
-                                                        obstacles4X2 == foodX && obstacles4Y2 == foodY ||
-                                                        extraObsX[l] == foodX && extraObsY[l] == foodY);
+                                                        } while (obstacles1X2 == foodX2 && obstacles1Y2 == foodY2 ||
+                                                        obstacles2X2 == foodX2 && obstacles2Y2 == foodY2 ||
+                                                        obstacles3X2 == foodX2 && obstacles3Y2 == foodY2 ||
+                                                        obstacles4X2 == foodX2 && obstacles4Y2 == foodY2 ||
+                                                        extraObsX[l] == foodX2 && extraObsY[l] == foodY2);
                                                     }
                                                     Console.Write(foodS2);
                                                     timer2 = 0;
