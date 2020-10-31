@@ -182,6 +182,11 @@ namespace SnakeGame
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Please select one of the option below and press Enter.");
 
+            //Obtain the music file from the resource folder
+            WindowsMediaPlayer menuMusic = new WindowsMediaPlayer();
+            string mmName = "Game-Menu.mp3";
+            menuMusic.URL = AppDomain.CurrentDomain.BaseDirectory + mmName;
+
             // create start menu options
             List<string> menuOptions = new List<string>()
             {
@@ -191,13 +196,7 @@ namespace SnakeGame
             };
 
             do
-            {
-                //Obtain the music file from the resource folder
-                WindowsMediaPlayer menuMusic = new WindowsMediaPlayer();
-                string mmName = "Game-Menu.mp3";
-                menuMusic.URL = AppDomain.CurrentDomain.BaseDirectory + mmName;             
-                menuMusic.controls.play(); // Plays the music on the menu
-
+            {        
                 //Obtain the music file from the resource folder
                 WindowsMediaPlayer hitObstacle = new WindowsMediaPlayer();
                 string hoName = "teleport.wav";
