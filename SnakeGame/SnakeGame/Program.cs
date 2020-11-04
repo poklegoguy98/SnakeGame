@@ -996,7 +996,7 @@ namespace SnakeGame
                                                                 spfoodY2 = randomNumSP2.Next(2, consoleHeightLimit);
                                                                 Console.SetCursorPosition(spfoodX2, spfoodY2);
                                                             }
-                                                        } while (obstacles1X2 == foodX2 && obstacles1Y2 == spfoodY2 ||
+                                                        } while (obstacles1X2 == spfoodX2 && obstacles1Y2 == spfoodY2 ||
                                                         obstacles2X2 == spfoodX2 && obstacles2Y2 == spfoodY2 ||
                                                         obstacles3X2 == spfoodX2 && obstacles3Y2 == spfoodY2 ||
                                                         obstacles4X2 == spfoodX2 && obstacles4Y2 == spfoodY2 ||
@@ -1073,7 +1073,7 @@ namespace SnakeGame
                                                                 spfoodY2 = randomNumSP2.Next(2, consoleHeightLimit);
                                                                 Console.SetCursorPosition(spfoodX2, spfoodY2);
                                                             }
-                                                        } while (obstacles1X2 == foodX2 && obstacles1Y2 == spfoodY2 ||
+                                                        } while (obstacles1X2 == spfoodX2 && obstacles1Y2 == spfoodY2 ||
                                                         obstacles2X2 == spfoodX2 && obstacles2Y2 == spfoodY2 ||
                                                         obstacles3X2 == spfoodX2 && obstacles3Y2 == spfoodY2 ||
                                                         obstacles4X2 == spfoodX2 && obstacles4Y2 == spfoodY2 ||
