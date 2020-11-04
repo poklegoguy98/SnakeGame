@@ -212,7 +212,8 @@ namespace SnakeGame
             };
 
             do
-            {        
+            {
+                menuMusic.settings.setMode("Loop", true);
                 optionSelected = configureStartMenu(menuOptions);
                 switch (optionSelected)
                 {
