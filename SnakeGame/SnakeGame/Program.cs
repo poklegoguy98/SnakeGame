@@ -167,7 +167,7 @@ namespace SnakeGame
             Program program = new Program();
             Coordinate[] direction = new Coordinate[4];
             program.Direction(direction);
-            var path = "C:/Users/dunca/SnakeGame/SnakeGame/SnakeGame/bin/Debug/netcoreapp3.1/score.txt";
+            var path = AppDomain.CurrentDomain.BaseDirectory + "score.txt";
 
             // start menu logo and description
             Console.SetCursorPosition(28, 5);
@@ -1206,20 +1206,18 @@ namespace SnakeGame
                         Console.SetCursorPosition(32, 8);
                         Console.ForegroundColor = ConsoleColor.White;
                         Console.WriteLine("Player Scoreboard");
+                        Console.SetCursorPosition(21, 9);
+                        Console.WriteLine("\t" + "Name" + "\t" + "\t" + "\t" + "\t" + "Score");
                         using (StreamReader file = new StreamReader(path))
                         {
-                            int i = 0;
                             string score;
                             while ((score = file.ReadLine()) != null)
                             {
                                 //displays previous name and score of players
-                                Console.SetCursorPosition(21, 9);
-                                Console.WriteLine("Name" + "\t" + "\t" + "\t" + "\t" + "Score");
-                                Console.SetCursorPosition(21, 10);
-                                Console.WriteLine(score);
+                                Console.WriteLine("\t" + "\t" + "\t" + score);
                             }
                         }
-                        Console.SetCursorPosition(27, 12);
+                        Console.SetCursorPosition(27, 24);
                         Console.WriteLine("Press ESC to exit scoreboard");
                         if (Console.ReadKey().Key == ConsoleKey.Escape)
                         {

@@ -2,3 +2,4 @@ hh				0
 kkkk				15
 ii				0
 eeeeeee				3
+rrrrrrr				3
