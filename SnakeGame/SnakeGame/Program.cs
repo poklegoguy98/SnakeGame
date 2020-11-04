@@ -590,9 +590,11 @@ namespace SnakeGame
                                                     Console.SetCursorPosition(37,11);
                                                     Console.WriteLine("YOUR SCORE: " + gameScore);
                                                     Console.SetCursorPosition(33,12);
+                                                    //User input to save name
                                                     Console.WriteLine("PLEASE ENTER YOUR NAME: ");
                                                     Console.SetCursorPosition(40, 13);
                                                     string username = Console.ReadLine();
+                                                    //Saves name and score into text file
                                                     sw.WriteLine(username + "\t" + "\t" + "\t" + "\t" + gameScore.ToString());
                                                     sw.Close();
                                                     Console.SetCursorPosition(34,14);
@@ -1210,6 +1212,7 @@ namespace SnakeGame
                             string score;
                             while ((score = file.ReadLine()) != null)
                             {
+                                //displays previous name and score of players
                                 Console.SetCursorPosition(21, 9);
                                 Console.WriteLine("Name" + "\t" + "\t" + "\t" + "\t" + "Score");
                                 Console.SetCursorPosition(21, 10);
