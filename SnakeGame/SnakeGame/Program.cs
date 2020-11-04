@@ -191,6 +191,18 @@ namespace SnakeGame
             string mmName = "Game-Menu.mp3";
             menuMusic.URL = AppDomain.CurrentDomain.BaseDirectory + mmName;
 
+            //Obtain the music file from the resource folder
+            WindowsMediaPlayer hitObstacle = new WindowsMediaPlayer();
+            string hoName = "teleport.wav";
+            hitObstacle.URL = AppDomain.CurrentDomain.BaseDirectory + hoName;
+            hitObstacle.controls.stop();
+
+            //Obtain the music file from the resource folder
+            WindowsMediaPlayer eatFood = new WindowsMediaPlayer();
+            string efName = "click.wav";
+            eatFood.URL = AppDomain.CurrentDomain.BaseDirectory + efName;
+            eatFood.controls.stop();
+
             // create start menu options
             List<string> menuOptions = new List<string>()
             {
@@ -201,19 +213,6 @@ namespace SnakeGame
 
             do
             {        
-                //Obtain the music file from the resource folder
-                WindowsMediaPlayer hitObstacle = new WindowsMediaPlayer();
-                string hoName = "teleport.wav";
-                hitObstacle.URL = AppDomain.CurrentDomain.BaseDirectory + hoName;            
-                hitObstacle.controls.stop();
-
-                //Obtain the music file from the resource folder
-                WindowsMediaPlayer eatFood = new WindowsMediaPlayer();
-                string efName = "click.wav";
-                eatFood.URL = AppDomain.CurrentDomain.BaseDirectory + efName;                
-                eatFood.controls.stop();
-
-
                 optionSelected = configureStartMenu(menuOptions);
                 switch (optionSelected)
                 {
@@ -344,8 +343,8 @@ namespace SnakeGame
 
                                             do // until escape
                                             {
-                                        // print directions at top, then restore position
-                                        // save then restore current color
+                                                 // print directions at top, then restore position
+                                                // save then restore current color
                                                 ConsoleColor cc = Console.ForegroundColor;
                                                 Console.ForegroundColor = ConsoleColor.Green;
                                                 Console.SetCursorPosition(0, 0);
@@ -480,7 +479,7 @@ namespace SnakeGame
                                                 }
 
                                                 // set a timer to change the position of the special food after a time interval 
-                                                if (timerSP == 150)
+                                                if (timerSP == 20)
                                                 {
                                                     Console.SetCursorPosition(spfoodX, spfoodY);
                                                     if (five == true)
@@ -554,6 +553,8 @@ namespace SnakeGame
                                                 {
                                                     eatFood.controls.play(); // play this sound effect when a food was ate
                                                     gameScore+=2;
+                                                    spfoodX = randomNumSP.Next(1, consoleWidthLimit);
+                                                    spfoodY = randomNumSP.Next(2, consoleHeightLimit);
                                                     do
                                                     {
                                                         if (obstacles1X != spfoodX && obstacles1Y != spfoodY ||
@@ -581,19 +582,24 @@ namespace SnakeGame
                                                 //Winning requirement: Snake eats 10 food
                                                 if (gameScore >= 10)
                                                 {
-                                                    Console.Clear();
-                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME CLEAR!!");
-                                                    Console.SetCursorPosition(39,10);
-                                                    Console.WriteLine("YOU WIN!!");
-                                                    Console.SetCursorPosition(37,11);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore);
-                                                    Console.SetCursorPosition(33,12);
-                                                    //User input to save name
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 13);
-                                                    string username = Console.ReadLine();
+                                                    string username;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Green;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME CLEAR!!");
+                                                        Console.SetCursorPosition(39, 10);
+                                                        Console.WriteLine("YOU WIN!!");
+                                                        Console.SetCursorPosition(37, 11);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore);
+                                                        Console.SetCursorPosition(23, 12);
+                                                        //User input to save name
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 13);
+                                                        username = Console.ReadLine();
+                                                    }while (username.Length > 7);
+
                                                     //Saves name and score into text file
                                                     sw.WriteLine(username + "\t" + "\t" + "\t" + "\t" + gameScore.ToString());
                                                     sw.Close();
@@ -607,16 +613,21 @@ namespace SnakeGame
                                                 if (snakeHN.column == obstacles1X && snakeHN.row == obstacles1Y)
                                                 {
                                                     hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
+                                                    string username;
+                                                    do
+                                                    {
+                                                    Console.Clear();
                                                     Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
+                                                    Console.SetCursorPosition(38, 9);
                                                     Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
+                                                    Console.SetCursorPosition(37, 10);
                                                     Console.WriteLine("YOUR SCORE: " + gameScore);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
+                                                    Console.SetCursorPosition(23, 11);
+                                                    Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
                                                     Console.SetCursorPosition(40, 12);
-                                                    string username = Console.ReadLine();
+                                                    username = Console.ReadLine();
+                                                    } while (username.Length > 7);
+
                                                     sw.WriteLine(username + "\t" + "\t" + "\t" + "\t" + gameScore.ToString());
                                                     sw.Close();
                                                     Console.SetCursorPosition(34,13);
@@ -628,19 +639,24 @@ namespace SnakeGame
                                                 if (snakeHN.column == obstacles2X && snakeHN.row == obstacles2Y)
                                                 {
                                                     hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username = Console.ReadLine();
+                                                    string username;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME OVER!!");
+                                                        Console.SetCursorPosition(37, 10);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore);
+                                                        Console.SetCursorPosition(23, 11);
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 12);
+                                                        username = Console.ReadLine();
+                                                    } while (username.Length > 7);
+
                                                     sw.WriteLine(username + "\t" + "\t" + "\t" + "\t" + gameScore.ToString());
                                                     sw.Close();
-                                                    Console.SetCursorPosition(34,13);
+                                                    Console.SetCursorPosition(34, 13);
                                                     Console.WriteLine("PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
@@ -649,19 +665,24 @@ namespace SnakeGame
                                                 if (snakeHN.column == obstacles3X && snakeHN.row == obstacles3Y)
                                                 {
                                                     hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username = Console.ReadLine();
+                                                    string username;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME OVER!!");
+                                                        Console.SetCursorPosition(37, 10);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore);
+                                                        Console.SetCursorPosition(23, 11);
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 12);
+                                                        username = Console.ReadLine();
+                                                    } while (username.Length > 7);
+
                                                     sw.WriteLine(username + "\t" + "\t" + "\t" + "\t" + gameScore.ToString());
                                                     sw.Close();
-                                                    Console.SetCursorPosition(34,13);
+                                                    Console.SetCursorPosition(34, 13);
                                                     Console.WriteLine("PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
@@ -669,20 +690,25 @@ namespace SnakeGame
 
                                                 if (snakeHN.column == obstacles4X && snakeHN.row == obstacles4Y)
                                                 {
-                                                   hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username = Console.ReadLine();
+                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
+                                                    string username;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME OVER!!");
+                                                        Console.SetCursorPosition(37, 10);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore);
+                                                        Console.SetCursorPosition(23, 11);
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 12);
+                                                        username = Console.ReadLine();
+                                                    } while (username.Length > 7);
+
                                                     sw.WriteLine(username + "\t" + "\t" + "\t" + "\t" + gameScore.ToString());
                                                     sw.Close();
-                                                    Console.SetCursorPosition(34,13);
+                                                    Console.SetCursorPosition(34, 13);
                                                     Console.WriteLine("PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
@@ -943,7 +969,7 @@ namespace SnakeGame
                                                 }
 
                                                  // set a timer to change the position of the special food after a time interval 
-                                                if (timerSP2 == 120)
+                                                if (timerSP2 == 20)
                                                 {
                                                     Console.SetCursorPosition(spfoodX2, spfoodY2);
                                                     if (five2 == true)
@@ -1027,6 +1053,8 @@ namespace SnakeGame
                                                 {
                                                     eatFood.controls.play(); // play this sound effect when a food was ate
                                                     gameScore2+=2;
+                                                    spfoodX2 = randomNumSP2.Next(1, consoleWidthLimit);
+                                                    spfoodY2 = randomNumSP2.Next(2, consoleHeightLimit);
                                                     for (int l = 0; l < 4; l++)
                                                     { 
                                                         do
@@ -1058,18 +1086,23 @@ namespace SnakeGame
                                                 //Winning requirement: Snake eats 15 food
                                                 if (gameScore2 >= 15)
                                                 {
-                                                   Console.Clear();
-                                                    Console.ForegroundColor = ConsoleColor.Green;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME CLEAR!!");
-                                                    Console.SetCursorPosition(39,10);
-                                                    Console.WriteLine("YOU WIN!!");
-                                                    Console.SetCursorPosition(37,11);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore2);
-                                                    Console.SetCursorPosition(33,12);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 13);
-                                                    string username2 = Console.ReadLine();
+                                                    string username2;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Green;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME CLEAR!!");
+                                                        Console.SetCursorPosition(39, 10);
+                                                        Console.WriteLine("YOU WIN!!");
+                                                        Console.SetCursorPosition(37, 11);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore2);
+                                                        Console.SetCursorPosition(23, 12);
+                                                        //User input to save name
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 13);
+                                                        username2 = Console.ReadLine();
+                                                    } while (username2.Length > 7);
                                                     sw2.WriteLine(username2 + "\t" + "\t" + "\t" + "\t" + gameScore2.ToString());
                                                     sw2.Close();
                                                     Console.SetCursorPosition(34,14);
@@ -1082,19 +1115,23 @@ namespace SnakeGame
                                                 if (snakeHN.column == obstacles1X2 && snakeHN.row == obstacles1Y2)
                                                 {
                                                     hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore2);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username2 = Console.ReadLine();
+                                                    string username2;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME OVER!!");
+                                                        Console.SetCursorPosition(37, 10);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore2);
+                                                        Console.SetCursorPosition(23, 11);
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 12);
+                                                        username2 = Console.ReadLine();
+                                                    } while (username2.Length > 7);
                                                     sw2.WriteLine(username2 + "\t" + "\t" + "\t" + "\t" + gameScore2.ToString());
                                                     sw2.Close();
-                                                    Console.SetCursorPosition(34,13);
+                                                    Console.SetCursorPosition(34, 13);
                                                     Console.WriteLine("PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
@@ -1103,19 +1140,23 @@ namespace SnakeGame
                                                 if (snakeHN.column == obstacles2X2 && snakeHN.row == obstacles2Y2)
                                                 {
                                                     hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore2);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username2 = Console.ReadLine();
+                                                    string username2;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME OVER!!");
+                                                        Console.SetCursorPosition(37, 10);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore2);
+                                                        Console.SetCursorPosition(23, 11);
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 12);
+                                                        username2 = Console.ReadLine();
+                                                    } while (username2.Length > 7);
                                                     sw2.WriteLine(username2 + "\t" + "\t" + "\t" + "\t" + gameScore2.ToString());
                                                     sw2.Close();
-                                                    Console.SetCursorPosition(34,13);
+                                                    Console.SetCursorPosition(34, 13);
                                                     Console.WriteLine("PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
@@ -1124,19 +1165,23 @@ namespace SnakeGame
                                                 if (snakeHN.column == obstacles3X2 && snakeHN.row == obstacles3Y2)
                                                 {
                                                     hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore2);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username2 = Console.ReadLine();
+                                                    string username2;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME OVER!!");
+                                                        Console.SetCursorPosition(37, 10);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore2);
+                                                        Console.SetCursorPosition(23, 11);
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 12);
+                                                        username2 = Console.ReadLine();
+                                                    } while (username2.Length > 7);
                                                     sw2.WriteLine(username2 + "\t" + "\t" + "\t" + "\t" + gameScore2.ToString());
                                                     sw2.Close();
-                                                    Console.SetCursorPosition(34,13);
+                                                    Console.SetCursorPosition(34, 13);
                                                     Console.WriteLine("PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
@@ -1145,19 +1190,23 @@ namespace SnakeGame
                                                 if (snakeHN.column == obstacles4X2 && snakeHN.row == obstacles4Y2)
                                                 {
                                                     hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore2);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username2 = Console.ReadLine();
+                                                    string username2;
+                                                    do
+                                                    {
+                                                        Console.Clear();
+                                                        Console.ForegroundColor = ConsoleColor.Red;
+                                                        Console.SetCursorPosition(38, 9);
+                                                        Console.WriteLine("GAME OVER!!");
+                                                        Console.SetCursorPosition(37, 10);
+                                                        Console.WriteLine("YOUR SCORE: " + gameScore2);
+                                                        Console.SetCursorPosition(23, 11);
+                                                        Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                        Console.SetCursorPosition(40, 12);
+                                                        username2 = Console.ReadLine();
+                                                    } while (username2.Length > 7);
                                                     sw2.WriteLine(username2 + "\t" + "\t" + "\t" + "\t" + gameScore2.ToString());
                                                     sw2.Close();
-                                                    Console.SetCursorPosition(34,13);
+                                                    Console.SetCursorPosition(34, 13);
                                                     Console.WriteLine("PRESS ENTER TO EXIT");
                                                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                                                     return;
@@ -1167,23 +1216,27 @@ namespace SnakeGame
                                                 {
                                                     if (snakeHN.column == extraObsX[l] && snakeHN.row == extraObsY[l])
                                                     {
-                                                    hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
-                                                    Console.Clear();         
-                                                    Console.ForegroundColor = ConsoleColor.Red;
-                                                    Console.SetCursorPosition(38,9);
-                                                    Console.WriteLine("GAME OVER!!");
-                                                    Console.SetCursorPosition(37,10);
-                                                    Console.WriteLine("YOUR SCORE: " + gameScore2);
-                                                    Console.SetCursorPosition(33,11);
-                                                    Console.WriteLine("PLEASE ENTER YOUR NAME: ");
-                                                    Console.SetCursorPosition(40, 12);
-                                                    string username2 = Console.ReadLine();
-                                                    sw2.WriteLine(username2 + "\t" + "\t" + "\t" + "\t" + gameScore2.ToString());
-                                                    sw2.Close();
-                                                    Console.SetCursorPosition(34,13);
-                                                    Console.WriteLine("PRESS ENTER TO EXIT");
-                                                    while (Console.ReadKey().Key != ConsoleKey.Enter) { }
-                                                    return;
+                                                        hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
+                                                        string username2;
+                                                        do
+                                                        {
+                                                            Console.Clear();
+                                                            Console.ForegroundColor = ConsoleColor.Red;
+                                                            Console.SetCursorPosition(38, 9);
+                                                            Console.WriteLine("GAME OVER!!");
+                                                            Console.SetCursorPosition(37, 10);
+                                                            Console.WriteLine("YOUR SCORE: " + gameScore2);
+                                                            Console.SetCursorPosition(23, 11);
+                                                            Console.WriteLine("PLEASE ENTER YOUR NAME (maximum 7 characters): ");
+                                                            Console.SetCursorPosition(40, 12);
+                                                            username2 = Console.ReadLine();
+                                                        } while (username2.Length > 7);
+                                                        sw2.WriteLine(username2 + "\t" + "\t" + "\t" + "\t" + gameScore2.ToString());
+                                                        sw2.Close();
+                                                        Console.SetCursorPosition(34, 13);
+                                                        Console.WriteLine("PRESS ENTER TO EXIT");
+                                                        while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+                                                        return;
                                                     }
                                                 }
                                             } while (gameLive);
