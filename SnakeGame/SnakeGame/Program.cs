@@ -240,6 +240,7 @@ namespace SnakeGame
                                     {
                                         theSnek.Enqueue(new Coordinate(2, i));
                                     }
+
                                     foreach (Coordinate coordinate in theSnek)
                                     {
                                         Console.SetCursorPosition(coordinate.column, coordinate.row);
@@ -375,10 +376,11 @@ namespace SnakeGame
                                         }
 
                                         // initialise and indicate the head of the snake
+                                        int snakeNR, snakeNC;
                                         Coordinate snakeH = theSnek.Last();
                                         Coordinate direcN = direction[direc];
-                                        int snakeNR = snakeH.row + direcN.row;
-                                        int snakeNC = snakeH.column + direcN.column;
+                                        snakeNR = snakeH.row + direcN.row;
+                                        snakeNC = snakeH.column + direcN.column;
                                         Coordinate snakeHN = new Coordinate(snakeNR, snakeNC);
 
                                         // set conditions when the snake went out of the game window
@@ -708,6 +710,7 @@ namespace SnakeGame
                                     {
                                         theSnek2.Enqueue(new Coordinate(2, j));
                                     }
+
                                     foreach (Coordinate coordinate in theSnek2)
                                     {
                                         Console.SetCursorPosition(coordinate.column, coordinate.row);
@@ -860,10 +863,11 @@ namespace SnakeGame
                                         }
 
                                         // initialise and indicate the head of the snake
+                                        int snakeNR, snakeNC;
                                         Coordinate snakeH = theSnek2.Last();
                                         Coordinate direcN = direction[direc];
-                                        int snakeNR = snakeH.row + direcN.row;
-                                        int snakeNC = snakeH.column + direcN.column;
+                                        snakeNR = snakeH.row + direcN.row;
+                                        snakeNC = snakeH.column + direcN.column;
                                         Coordinate snakeHN = new Coordinate(snakeNR, snakeNC);
 
                                         // set conditions when the snake went out of the game window
