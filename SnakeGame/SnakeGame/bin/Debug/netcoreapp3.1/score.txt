@@ -3,3 +3,4 @@ wtf				10
 please				15
 please				10
 hope				15
+finally				15

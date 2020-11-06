@@ -294,7 +294,7 @@ namespace SnakeGame
                                     Console.SetCursorPosition(spfoodX, spfoodY);
                                     Console.Write(spfoodS);
 
-                                    //generate obstacles for hard mode
+                                    //generate obstacles for both modes
                                     int Obsx, Obsy;
                                     string obs = "█";
                                     List<int> ObsX = new List<int>();
