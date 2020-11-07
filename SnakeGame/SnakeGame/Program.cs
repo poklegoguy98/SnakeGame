@@ -212,6 +212,7 @@ namespace SnakeGame
                         int obstaclesNum;
                         int foodTimer;
                         int scoreToWin;
+                        int spfoodTimer;
 
                         // create difficulty options
                         List<string> difficultyOptions = new List<string>()
@@ -233,6 +234,7 @@ namespace SnakeGame
                                 delayInMs = 70;
                                 obstaclesNum = 4;
                                 foodTimer = 100;
+                                spfoodTimer = 30;
                                 scoreToWin = 10;
                                 break;
                             }
@@ -246,6 +248,7 @@ namespace SnakeGame
                                 delayInMs = 35;
                                 obstaclesNum = 8;
                                 foodTimer = 70;
+                                spfoodTimer = 20;
                                 scoreToWin = 15;
                                 break;
                             }
@@ -459,7 +462,7 @@ namespace SnakeGame
                                         }
 
                                         // set a timer to change the position of the special food after a time interval 
-                                        if (timerSP == 30)
+                                        if (timerSP == spfoodTimer)
                                         {
                                             Console.SetCursorPosition(spfoodX, spfoodY);
                                             if (five == true)

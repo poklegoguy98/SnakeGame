@@ -4,3 +4,6 @@ please				15
 please				10
 hope				15
 finally				15
+poklego				16
+lmao				0
+dsr				4
