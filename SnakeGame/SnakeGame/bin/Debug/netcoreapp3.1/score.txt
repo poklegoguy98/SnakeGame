@@ -7,3 +7,5 @@ finally				15
 poklego				16
 lmao				0
 dsr				4
+				0
+ez				10

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks.Sources;
 using WMPLib;
 
 namespace SnakeGame
@@ -142,7 +144,7 @@ namespace SnakeGame
             Program program = new Program();
             Coordinate[] direction = new Coordinate[4];
             program.Direction(direction);
-            var path = AppDomain.CurrentDomain.BaseDirectory + "score.txt";
+            var path = AppDomain.CurrentDomain.BaseDirectory + "score.txt";        
 
             // start menu logo and description
             Console.SetCursorPosition(28, 5);
@@ -167,10 +169,25 @@ namespace SnakeGame
             menuMusic.URL = AppDomain.CurrentDomain.BaseDirectory + mmName;
             menuMusic.settings.setMode("Loop", true);
 
+            WindowsMediaPlayer wonEffect = new WindowsMediaPlayer();
+            string weName = "won.wav";
+            wonEffect.URL = AppDomain.CurrentDomain.BaseDirectory + weName;          
+            wonEffect.settings.volume = 3;
+            wonEffect.controls.stop();
+
+            //Obtain the music file from the resource folder
+            WindowsMediaPlayer modeMusic = new WindowsMediaPlayer();
+            string modeName = "snake.mp3";
+            modeMusic.URL = AppDomain.CurrentDomain.BaseDirectory + modeName;
+            modeMusic.settings.setMode("Loop", true);
+            modeMusic.settings.volume = 3;
+            modeMusic.controls.stop();
+
             //Obtain the music file from the resource folder
             WindowsMediaPlayer hitObstacle = new WindowsMediaPlayer();
             string hoName = "teleport.wav";
             hitObstacle.URL = AppDomain.CurrentDomain.BaseDirectory + hoName;
+            hitObstacle.settings.volume = 2;
             hitObstacle.controls.stop();
 
             //Obtain the music file from the resource folder
@@ -255,7 +272,7 @@ namespace SnakeGame
                         } while (true);
 
                         menuMusic.controls.stop();
-
+                        modeMusic.controls.play();
                                     // game mode differ according to the difficulty selection
                                     // initialise and generate the snake body
                                     // set the snake to start moving from the top left corner by default
@@ -327,7 +344,7 @@ namespace SnakeGame
                                     StreamWriter sw = File.AppendText(path);
 
                                     do // until escape
-                                    {
+                                    {                                       
                                         // print directions at top, then restore position
                                         // save then restore current color
                                         ConsoleColor cc = Console.ForegroundColor;
@@ -557,6 +574,8 @@ namespace SnakeGame
                                         //Winning requirement: Player reach 10 points in easy mode or 15 points in hard mode
                                         if (gameScore >= scoreToWin)
                                         {
+                                            modeMusic.controls.stop();
+                                            wonEffect.controls.play();
                                             string username2;
                                             do
                                             {
@@ -587,6 +606,7 @@ namespace SnakeGame
                                         {
                                             if (snakeHN.column == ObsX[j] && snakeHN.row == ObsY[j])
                                             {
+                                                modeMusic.controls.stop();
                                                 hitObstacle.controls.play(); // Plays the hitObstacle sound effect when the snake hits the obstacle
                                                 string username2;
                                                 do
