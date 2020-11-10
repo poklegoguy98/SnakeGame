@@ -46,7 +46,6 @@ C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\bin\Debug\netcoreapp3.1\SnakeGame.p
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.csprojAssemblyReference.cache
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.AssemblyInfoInputs.cache
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.AssemblyInfo.cs
-C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.csproj.CoreCompileInputs.cache
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.dll
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.pdb
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.genruntimeconfig.cache
@@ -121,3 +120,10 @@ C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\Interop.WML
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\Interop.ACTIVEXLib.dll
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\Interop.WMPNSSCI.dll
 C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.csproj.ResolveComReference.cache
+C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.csproj.CoreCompileInputs.cache
+C:\Users\dunca\SnakeGame\SnakeGame\SnakeGame\obj\Debug\netcoreapp3.1\SnakeGame.csproj.CopyComplete

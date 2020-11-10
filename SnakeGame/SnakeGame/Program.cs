@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading.Tasks.Sources;
 using WMPLib;
 
@@ -298,24 +300,28 @@ namespace SnakeGame
                                     int foodX;
                                     int foodY;
                                     Random randomNum = new Random();
-                                    char foodS = '$';
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.OutputEncoding = Encoding.Unicode;
                                     foodX = randomNum.Next(1, consoleWidthLimit);
                                     foodY = randomNum.Next(2, consoleHeightLimit);
                                     Console.SetCursorPosition(foodX, foodY);
-                                    Console.Write(foodS);
+                                    Console.Write("◉");
+
 
                                     //generate the special food when the game start
                                     int spfoodX;
                                     int spfoodY;
                                     Random randomNumSP = new Random();
-                                    char spfoodS = '&';
+                                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                    Console.OutputEncoding = Encoding.Unicode;
                                     spfoodX = randomNumSP.Next(1, consoleWidthLimit);
                                     spfoodY = randomNumSP.Next(2, consoleHeightLimit);
                                     Console.SetCursorPosition(spfoodX, spfoodY);
-                                    Console.Write(spfoodS);
+                                    Console.Write("⋆");
 
                                     //generate obstacles for both modes
                                     int Obsx, Obsy;
+                                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
                                     string obs = "█";
                                     List<int> ObsX = new List<int>();
                                     List<int> ObsY = new List<int>();
@@ -474,7 +480,9 @@ namespace SnakeGame
                                                     }
                                                 } while (ObsX[j] == foodX && ObsY[j] == foodY);
                                             }
-                                            Console.Write(foodS);
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.OutputEncoding = Encoding.Unicode;
+                                            Console.Write("◉");
                                             timer = 0;
                                         }
 
@@ -504,7 +512,9 @@ namespace SnakeGame
                                                     }
                                                 } while (ObsX[j] == spfoodX && ObsY[j] == spfoodY);
                                             }
-                                            Console.Write(spfoodS);
+                                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                            Console.OutputEncoding = Encoding.Unicode;
+                                            Console.Write("⋆");
                                             timerSP = 0;
                                         }
 
@@ -532,7 +542,9 @@ namespace SnakeGame
                                                     }
                                                 } while (ObsX[j] == foodX && ObsY[j] == foodY);
                                             }
-                                            Console.Write(foodS);
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Console.OutputEncoding = Encoding.Unicode;
+                                            Console.Write("◉");
                                             timer = 0;
                                         }
                                         else
@@ -567,7 +579,9 @@ namespace SnakeGame
                                                     }
                                                 } while (ObsX[j] == spfoodX && ObsY[j] == spfoodY);
                                             }
-                                            Console.Write(spfoodS);
+                                            Console.ForegroundColor = ConsoleColor.DarkYellow;
+                                            Console.OutputEncoding = Encoding.Unicode;
+                                            Console.Write("⋆");
                                             timerSP = 0;
                                         }
 
