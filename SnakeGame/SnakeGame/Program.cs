@@ -305,7 +305,7 @@ namespace SnakeGame
                                     foodX = randomNum.Next(1, consoleWidthLimit);
                                     foodY = randomNum.Next(2, consoleHeightLimit);
                                     Console.SetCursorPosition(foodX, foodY);
-                                    Console.Write("◉");
+                                    Console.Write("ó");
 
 
                                     //generate the special food when the game start
@@ -317,7 +317,7 @@ namespace SnakeGame
                                     spfoodX = randomNumSP.Next(1, consoleWidthLimit);
                                     spfoodY = randomNumSP.Next(2, consoleHeightLimit);
                                     Console.SetCursorPosition(spfoodX, spfoodY);
-                                    Console.Write("⋆");
+                                    Console.Write("♦");
 
                                     //generate obstacles for both modes
                                     int Obsx, Obsy;
@@ -482,7 +482,7 @@ namespace SnakeGame
                                             }
                                             Console.ForegroundColor = ConsoleColor.Red;
                                             Console.OutputEncoding = Encoding.Unicode;
-                                            Console.Write("◉");
+                                            Console.Write("ó");
                                             timer = 0;
                                         }
 
@@ -514,7 +514,7 @@ namespace SnakeGame
                                             }
                                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                                             Console.OutputEncoding = Encoding.Unicode;
-                                            Console.Write("⋆");
+                                            Console.Write("♦");
                                             timerSP = 0;
                                         }
 
@@ -544,7 +544,7 @@ namespace SnakeGame
                                             }
                                             Console.ForegroundColor = ConsoleColor.Red;
                                             Console.OutputEncoding = Encoding.Unicode;
-                                            Console.Write("◉");
+                                            Console.Write("ó");
                                             timer = 0;
                                         }
                                         else
@@ -581,7 +581,7 @@ namespace SnakeGame
                                             }
                                             Console.ForegroundColor = ConsoleColor.DarkYellow;
                                             Console.OutputEncoding = Encoding.Unicode;
-                                            Console.Write("⋆");
+                                            Console.Write("♦");
                                             timerSP = 0;
                                         }
 
